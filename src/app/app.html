@@ -1,0 +1,74 @@
+<main class="container">
+    @if (!isSuccess()) {
+        <header class="header" [style.opacity]="isSubmitting() ? '0.5' : '1'" [style.transition]="'opacity 0.3s'">
+            <h1 id="main-title">Encuesta Antigravity</h1>
+            <p>Ayúdanos a mejorar tu experiencia de aprendizaje. Tus comentarios son fundamentales.</p>
+        </header>
+
+        <form [formGroup]="surveyForm" (ngSubmit)="submitForm()" [style.opacity]="isSubmitting() ? '0.5' : '1'">
+            <div class="form-group">
+                <label for="id_estudiante" class="label-primary">ID Estudiante</label>
+                <input type="text" id="id_estudiante" formControlName="id_estudiante" placeholder="Ingresa tu identificador (Ej: AL-001)">
+            </div>
+
+            <div class="form-group">
+                <label class="label-primary">¿Nivel de satisfacción general?</label>
+                <p class="label-subtext">De 1 (Muy insatisfecho) a 5 (Muy satisfecho)</p>
+                <div class="radio-group" id="satisfaction-group">
+                    <input type="radio" formControlName="nivel_satisfaccion" value="1" id="sat-1"><label for="sat-1">1</label>
+                    <input type="radio" formControlName="nivel_satisfaccion" value="2" id="sat-2"><label for="sat-2">2</label>
+                    <input type="radio" formControlName="nivel_satisfaccion" value="3" id="sat-3"><label for="sat-3">3</label>
+                    <input type="radio" formControlName="nivel_satisfaccion" value="4" id="sat-4"><label for="sat-4">4</label>
+                    <input type="radio" formControlName="nivel_satisfaccion" value="5" id="sat-5"><label for="sat-5">5</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-primary">¿Qué tan claro fue el contenido?</label>
+                <p class="label-subtext">De 1 (Nada claro) a 5 (Muy claro)</p>
+                <div class="radio-group" id="clarity-group">
+                    <input type="radio" formControlName="claridad_contenido" value="1" id="cla-1"><label for="cla-1">1</label>
+                    <input type="radio" formControlName="claridad_contenido" value="2" id="cla-2"><label for="cla-2">2</label>
+                    <input type="radio" formControlName="claridad_contenido" value="3" id="cla-3"><label for="cla-3">3</label>
+                    <input type="radio" formControlName="claridad_contenido" value="4" id="cla-4"><label for="cla-4">4</label>
+                    <input type="radio" formControlName="claridad_contenido" value="5" id="cla-5"><label for="cla-5">5</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-primary">¿Qué tan aplicable es lo aprendido?</label>
+                <p class="label-subtext">De 1 (Nada aplicable) a 5 (Muy aplicable)</p>
+                <div class="radio-group" id="applicability-group">
+                    <input type="radio" formControlName="aplicabilidad_practica" value="1" id="app-1"><label for="app-1">1</label>
+                    <input type="radio" formControlName="aplicabilidad_practica" value="2" id="app-2"><label for="app-2">2</label>
+                    <input type="radio" formControlName="aplicabilidad_practica" value="3" id="app-3"><label for="app-3">3</label>
+                    <input type="radio" formControlName="aplicabilidad_practica" value="4" id="app-4"><label for="app-4">4</label>
+                    <input type="radio" formControlName="aplicabilidad_practica" value="5" id="app-5"><label for="app-5">5</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="comentarios_adicionales" class="label-primary">Comentarios adicionales</label>
+                <textarea id="comentarios_adicionales" formControlName="comentarios_adicionales" rows="4" placeholder="Compártenos tus ideas o sugerencias..."></textarea>
+            </div>
+            <div class="form-group honeypot-field" style="opacity: 0; position: absolute; z-index: -1;">
+                <label for="website_verification">Este campo no debe ser rellenado</label>
+                <input type="text" id="website_verification" formControlName="website_verification" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" id="submit-button" class="btn-primary" [disabled]="isSubmitting() || surveyForm.invalid">
+                <span class="btn-text">{{ isSubmitting() ? 'Protegiendo y enviando...' : 'Enviar Respuestas' }}</span>
+                <span class="btn-icon">{{ isSubmitting() ? '⚡' : '→' }}</span>
+            </button>
+        </form>
+    } @else {
+        <section id="success-screen">
+            <div class="success-content">
+                <div class="success-icon">✓</div>
+                <h2>¡Gracias por tu apoyo!</h2>
+                <p>Tu opinión nos impulsa a seguir innovando en el curso de Antigravity.</p>
+                <button (click)="restart()" class="btn-secondary">Enviar otra respuesta</button>
+            </div>
+        </section>
+    }
+</main>
